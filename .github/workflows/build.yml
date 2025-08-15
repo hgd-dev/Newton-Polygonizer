@@ -39,28 +39,28 @@ jobs:
     # -------------------- Configure and Build --------------------
     - name: Configure and Build
       run: |
+        set -e
         mkdir build
         cd build
-        cmake -DCMAKE_BUILD_TYPE=Release -DSFML_STATIC_LIBRARIES=TRUE ..
+        cmake -DCMAKE_BUILD_TYPE=Release -DSFML_STATIC_LIBRARIES=TRUE -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=bin ..
         cmake --build . --config Release
 
     # -------------------- Package --------------------
     - name: Package binaries
       run: |
+        set -e
         cd build
+        mkdir package
+
         if [[ "$RUNNER_OS" == "Windows" ]]; then
-          mkdir package
-          powershell Copy-Item -Path Release\NewtonPolygon.exe -Destination package\
-          powershell Compress-Archive -Path package\* -DestinationPath Newton-Polygonizer-Windows.zip
+          cp bin/NewtonPolygon.exe package/
+          7z a Newton-Polygonizer-Windows.zip package/*
         elif [[ "$RUNNER_OS" == "macOS" ]]; then
-          mkdir package
-          cp NewtonPolygon package/
+          cp bin/NewtonPolygon package/
           zip -r Newton-Polygonizer-macOS.zip package
         elif [[ "$RUNNER_OS" == "Linux" ]]; then
           mkdir -p AppDir/usr/bin
-          cp NewtonPolygon AppDir/usr/bin/
-          # Optional: Create AppImage if appimagetool is available
-          # appimagetool AppDir Newton-Polygonizer-x86_64.AppImage
+          cp bin/NewtonPolygon AppDir/usr/bin/
           tar -czvf Newton-Polygonizer-Linux.tar.gz AppDir
         fi
 
