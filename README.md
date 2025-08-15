@@ -9,15 +9,15 @@ The **Newton Polygonizer** is an automation tool that constructs and calculates 
 *Caveat for all users:* To ensure lifespan of graph plot windows, the source code always ends in an empty indefinite loop. To terminate the process, use `Ctrl + C` or `Cmd + C` to trigger a keyboard interrupt. Only then does the program end (also automatically closes plot windows).
 
 **Recommended:** Use the auto-detecter — it picks the right version for your OS automatically.  
-[![Auto Detect OS](https://img.shields.io/badge/Download-Auto_Detect-success?style=for-the-badge&logo=github)](https://<username>.github.io/Newton-Polygonizer/download.html)
+[![Auto Detect OS](https://img.shields.io/badge/Download-Auto_Detect-success?style=for-the-badge&logo=github)](https://hgd-dev.github.io/Newton-Polygonizer/download.html)
 
 ---
 
 **Or pick manually:**
 
-[![Windows](https://img.shields.io/badge/Download-Windows-blue?style=for-the-badge&logo=windows)](https://github.com/<username>/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-Windows.zip)
-[![macOS](https://img.shields.io/badge/Download-macOS-lightgrey?style=for-the-badge&logo=apple)](https://github.com/<username>/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-macOS.zip)
-[![Linux](https://img.shields.io/badge/Download-Linux-yellow?style=for-the-badge&logo=linux)](https://github.com/<username>/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-Linux.tar.gz)
+[![Windows](https://img.shields.io/badge/Download-Windows-blue?style=for-the-badge&logo=windows)](https://github.com/hgd-dev/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-Windows.zip)
+[![macOS](https://img.shields.io/badge/Download-macOS-lightgrey?style=for-the-badge&logo=apple)](https://github.com/hgd-dev/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-macOS.zip)
+[![Linux](https://img.shields.io/badge/Download-Linux-yellow?style=for-the-badge&logo=linux)](https://github.com/hgd-dev/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-Linux.tar.gz)
 
 ---
 
@@ -167,5 +167,6 @@ Newton Polygon result numbers:
 - Convex Hull: Lower boundary of the Newton Polygon.
 
 - Latticed Hull: Convex Hull plus lattice points in between.
+
 
 - Result Numbers: Differences in x-coordinates between consecutive points in the latticed hull.
