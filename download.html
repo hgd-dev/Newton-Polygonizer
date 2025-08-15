@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Newton Polygonizer Download</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    a {
+      display: inline-block;
+      padding: 12px 20px;
+      margin: 10px;
+      font-size: 18px;
+      text-decoration: none;
+      color: white;
+      border-radius: 8px;
+    }
+    .windows { background: #0078D7; }
+    .macos { background: #555555; }
+    .linux { background: #FCC624; color: black; }
+  </style>
+</head>
+<body>
+  <h1>Newton Polygonizer Download</h1>
+  <p>We detected your operating system — click below to download.</p>
+
+  <div id="links">
+    <a id="win" class="windows" href="https://github.com/<username>/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-Windows.zip">Download for Windows</a>
+    <a id="mac" class="macos" href="https://github.com/<username>/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-macOS.zip">Download for macOS</a>
+    <a id="lin" class="linux" href="https://github.com/<username>/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-Linux.tar.gz">Download for Linux</a>
+
+  </div>
+
+  <script>
+    const ua = navigator.userAgent;
+    if (ua.includes("Win")) {
+      document.getElementById("win").style.border = "4px solid gold";
+    } else if (ua.includes("Mac")) {
+      document.getElementById("mac").style.border = "4px solid gold";
+    } else if (ua.includes("Linux")) {
+      document.getElementById("lin").style.border = "4px solid gold";
+    }
+  </script>
+</body>
+</html>
