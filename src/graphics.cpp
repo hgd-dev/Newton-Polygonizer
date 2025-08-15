@@ -1,5 +1,5 @@
-#include "config.h"
-#include "graphics.h"
+#include "include/config.h"
+#include "include/graphics.h"
 #include <SFML/Graphics.hpp>
 
 void create_SFML_plots(std::deque <std::pair <int, int>> points, std::string title, sf::Color pointColor) //Given a deque of coordinate pairs, a title, and a pen color, create a labeled coordinate plane plot using SFML in a new window
@@ -70,3 +70,4 @@ void create_SFML_plots(std::deque <std::pair <int, int>> points, std::string tit
         window.display();
     }
 }
+
