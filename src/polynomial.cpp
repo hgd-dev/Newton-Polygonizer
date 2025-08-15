@@ -1,6 +1,6 @@
-#include "polynomial.h"
-#include "utility.h"
-#include "config.h"
+#include "include/polynomial.h"
+#include "include/utility.h"
+#include "include/config.h"
 #include <iostream>
 
 void take_inputs() {
@@ -50,3 +50,4 @@ void output_given_polynomial() {
     }
     std::cout << '\n';
 }
+
