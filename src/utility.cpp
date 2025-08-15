@@ -1,4 +1,4 @@
-#include "utility.h"
+#include "include/utility.h"
 #include <climits>
 #include <cstdlib>
 #include <cctype>
@@ -39,3 +39,4 @@ bool is_prime(int number) {
     }
     return true;
 }
+
