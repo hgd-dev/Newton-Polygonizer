@@ -1,6 +1,6 @@
-#include "config.h"
-#include "utility.h"
-#include "geometry.h"
+#include "include/config.h"
+#include "include/utility.h"
+#include "include/geometry.h"
 #include <string>
 #include <iostream>
 #include <algorithm>
@@ -103,3 +103,4 @@ void fillLattice() //Add all lattice points between list of coordinates in the g
     }
     sort(polygon_lower.begin(), polygon_lower.end());
 }
+
