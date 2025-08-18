@@ -41,12 +41,16 @@ jobs:
         run: |
           cd build
           zip -r Newton-Polygonizer-macOS.zip NewtonPolygonizer
-          
       - name: Package Windows
         if: runner.os == 'Windows'
         run: |
           cd build
           Compress-Archive -Path Release/NewtonPolygonizer.exe -DestinationPath Newton-Polygonizer-Windows.zip          
+      - name: Create release
+        run: |
+          gh release create latest --title "Final OS Build" --notes "Automated build"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload to GitHub Release Linux
         if: runner.os == 'Linux'
         run: |
