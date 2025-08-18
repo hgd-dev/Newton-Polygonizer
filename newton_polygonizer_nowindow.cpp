@@ -257,7 +257,9 @@ int main() {
         cout << latticed_hull[i + 1].first - latticed_hull[i].first << ' ';
     }
     cout << "\n\n";
+    while (true) {}
     return 0;
 
 }
+
 
