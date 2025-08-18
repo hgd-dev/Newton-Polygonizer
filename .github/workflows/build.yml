@@ -1,54 +1,64 @@
-name: Build Newton Polygonizer for other OS
+name: Build Linux/macOS Standalone
 
 on:
   push:
-    branches: [main]
-  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   build:
-
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up CMake
-      uses: jwlawson/actions-setup-cmake@v2
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v2
 
-    - name: Configure and Build
-      run: |
-        mkdir -p build
-        cd build
-        cmake .. -DCMAKE_BUILD_TYPE=Release
-        cmake --build . --config Release
+      - name: Create build directory
+        run: mkdir -p build
 
-    - name: Package Executable
-      run: |
-        cd build
-        if [[ "$RUNNER_OS" == "Linux" ]]; then
-          tar -czvf Newton-Polygonizer-Linux.tar.gz NewtonPolygonizer
-        elif [[ "$RUNNER_OS" == "macOS" ]]; then
-          zip -r Newton-Polygonizer-macOS.zip NewtonPolygonizer
-        fi
+      - name: Build executable
+        run: |
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release
+        shell: bash
 
-    - name: Upload to GitHub Releases
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Package executable
+        run: |
+          cd build
+          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+            tar -czf Newton-Polygonizer-Linux.tar.gz NewtonPolygonizer
+          else
+            zip -r Newton-Polygonizer-macOS.zip NewtonPolygonizer
+          fi
+        shell: bash
 
-    - name: Upload packaged artifacts
-      uses: softprops/action-gh-release@v1
-      with:
-        files: |
-          build/Newton-Polygonizer-Linux.tar.gz
-          build/Newton-Polygonizer-macOS.zip
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download built artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build
+
+      - name: Upload to latest release
+        run: |
+          gh release create latest \
+            build/Newton-Polygonizer-Linux.tar.gz \
+            build/Newton-Polygonizer-macOS.zip \
+            --title "Latest Build" \
+            --notes "Automated build from GitHub Actions"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
