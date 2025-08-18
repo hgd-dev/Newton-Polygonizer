@@ -47,12 +47,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Download built artifacts
-        uses: actions/download-artifact@v4
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: build
-          path: build
-
+          path: |
+            build/Newton-Polygonizer-Linux.tar.gz
+            build/Newton-Polygonizer-macOS.zip
       - name: Upload to latest release
         run: |
           gh release create latest \
