@@ -12,9 +12,9 @@ For casual users, this only downloads an executable app for easy access, suited 
 
 ***Important Note:*** For some systems with auto-protection or malware scanners, the executable may be flagged as unknown. For users to continue, simply bypass (ex. clicking "Run Anyway"). The source code is all in this repository and I assure all that this project has no harmful intentions.
 
-[![Windows](https://img.shields.io/badge/Download-Windows-blue?style=for-the-badge&logo=windows)](https://github.com/hgd-dev/Newton-Polygonizer/actions/runs/17046561260/artifacts/3790578725)
-[![macOS](https://img.shields.io/badge/Download-macOS-lightgrey?style=for-the-badge&logo=apple)](https://github.com/hgd-dev/Newton-Polygonizer/actions/runs/17046561260/artifacts/3790575594)
-[![Linux](https://img.shields.io/badge/Download-Linux-yellow?style=for-the-badge&logo=linux)](https://github.com/hgd-dev/Newton-Polygonizer/actions/runs/17046561260/artifacts/3790575233)
+[![Windows](https://img.shields.io/badge/Download-Windows-blue?style=for-the-badge&logo=windows)](https://github.com/hgd-dev/Newton-Polygonizer/actions/runs/17047631604/artifacts/3790995834)
+[![macOS](https://img.shields.io/badge/Download-macOS-lightgrey?style=for-the-badge&logo=apple)](https://github.com/hgd-dev/Newton-Polygonizer/actions/runs/17047631604/artifacts/3790989051)
+[![Linux](https://img.shields.io/badge/Download-Linux-yellow?style=for-the-badge&logo=linux)](https://github.com/hgd-dev/Newton-Polygonizer/actions/runs/17047631604/artifacts/3790988488)
 
 ---
 
@@ -177,6 +177,7 @@ Newton Polygon result numbers:
 
 
 - Result Numbers: Differences in x-coordinates between consecutive points in the latticed hull.
+
 
 
 
