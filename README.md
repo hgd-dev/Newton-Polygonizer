@@ -16,7 +16,15 @@ For casual users, this only downloads an executable app for easy access, suited 
 [![macOS](https://img.shields.io/badge/Download-macOS-lightgrey?style=for-the-badge&logo=apple)](https://github.com/hgd-dev/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-macOS.zip)
 [![Linux](https://img.shields.io/badge/Download-Linux-yellow?style=for-the-badge&logo=linux)](https://github.com/hgd-dev/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-Linux.tar.gz)
 
-***Caveat for all runs:*** To ensure lifespan of graph plot windows, the source code always ends in an empty indefinite loop. To terminate the process, use `Ctrl + C` or `Cmd + C` to trigger a keyboard interrupt. Only then does the program end (also automatically closes plot windows).
+---
+
+### SFML Version (supported for Windows)
+
+SFML for this project currently only has Windows support. It generates graph plots in new windows to visualize the Newton Polygon.
+
+[![Windows](https://img.shields.io/badge/Download-Windows-blue?style=for-the-badge&logo=windows)](https://github.com/hgd-dev/Newton-Polygonizer/releases/v1.0.0-Windows/download/Newton-Polygonizer-Windows.zip)
+
+***Caveat for SFML runs:*** To ensure lifespan of graph plot windows, the source code always ends in an empty indefinite loop. To terminate the process, use `Ctrl + C` or `Cmd + C` to trigger a keyboard interrupt. Only then does the program end (also automatically closes plot windows).
 
 ---
 
@@ -169,5 +177,6 @@ Newton Polygon result numbers:
 
 
 - Result Numbers: Differences in x-coordinates between consecutive points in the latticed hull.
+
 
 
