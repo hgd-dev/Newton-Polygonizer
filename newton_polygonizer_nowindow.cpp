@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <climits>
 #include <thread>
+#include <string>
 using namespace std;
 int n = 0, p = 0;
 deque <int> polynomial_coefficients, polygon_lower;
@@ -253,4 +254,5 @@ int main() {
     }
     cout << "\n\n";
     return 0;
+
 }
