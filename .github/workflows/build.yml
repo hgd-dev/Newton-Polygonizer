@@ -45,12 +45,17 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           cd build
-          Compress-Archive -Path Release/NewtonPolygonizer.exe -DestinationPath Newton-Polygonizer-Windows.zip          
+          Compress-Archive -Path Release/NewtonPolygonizer.exe -DestinationPath Newton-Polygonizer-Windows.zip     
+          
       - name: Create release
         run: |
-          gh release view latest || gh release create latest --title "Final OS Build" --notes "Automated build"
+              gh release view latest || \
+              gh release create latest --target ${{ github.sha }} \
+              --title "Final OS Build" \
+              --notes "Automated build"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Upload to GitHub Release Linux
         if: runner.os == 'Linux'
         run: |
