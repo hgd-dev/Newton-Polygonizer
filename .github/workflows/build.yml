@@ -1,71 +1,56 @@
-name: Build Newton-Polygonizer
+name: Build and Release
 
 on:
   push:
-    branches: [main]
-  pull_request:
+    tags:
+      - 'v*.*.*'  # Trigger on version tags like v1.0.0
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    # Install dependencies
-    - name: Install dependencies on Linux
-      if: runner.os == 'Linux'
-      run: |
-        sudo apt update
-        sudo apt install -y cmake g++ libx11-dev libxrandr-dev libxcursor-dev libxinerama-dev libxi-dev \
-          libgl1-mesa-dev libfreetype6-dev libudev-dev libsfml-dev build-essential zip tar
+      - name: Install dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential cmake libsfml-dev zip tar
 
-    - name: Install dependencies on macOS
-      if: runner.os == 'macOS'
-      run: |
-        brew update
-        brew install cmake sfml
+      - name: Install dependencies
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew update
+          brew install cmake sfml zip
 
-    # Configure CMake
-    - name: Configure CMake
-      run: |
-        mkdir -p build
-        cd build
-        if [ "${{ runner.os }}" == "Linux" ]; then
-          # Force static SFML on Linux
-          cmake -DCMAKE_BUILD_TYPE=Release -DSFML_STATIC_LIBS=ON ..
-        else
-          # macOS: use static SFML
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$(brew --prefix sfml) -DSFML_STATIC_LIBS=ON ..
-        fi
+      - name: Create build directory
+        run: mkdir -p build
 
-    # Build
-    - name: Build
-      run: |
-        cd build
-        cmake --build . --config Release
+      - name: Configure CMake
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DSFML_STATIC_LIBRARIES=ON
 
-    # Package artifacts
-    - name: Package artifact
-      run: |
-        cd build
-        if [ "${{ runner.os }}" == "Linux" ]; then
-          # Standalone Linux executable tar.gz
-          tar -czvf Newton-Polygonizer-Linux.tar.gz NewtonPolygonizer
-        else
-          zip -r Newton-Polygonizer-macOS.zip NewtonPolygonizer.app
-        fi
+      - name: Build
+        run: cmake --build build --config Release
 
-    # Upload artifacts
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ runner.os }}-build
-        path: |
-          build/Newton-Polygonizer-Linux.tar.gz
-          build/Newton-Polygonizer-macOS.zip
+      - name: Package executable
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            tar -czvf build/Newton-Polygonizer-Linux.tar.gz -C build NewtonPolygonizer
+          else
+            zip -j build/Newton-Polygonizer-macOS.zip build/NewtonPolygonizer
+          fi
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build/Newton-Polygonizer-Linux.tar.gz
+            build/Newton-Polygonizer-macOS.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
