@@ -126,7 +126,9 @@ void convexHullDescent() //Perform double-sided descent across the list of point
     deque <int> global_minima = find_global_minima();
     output_coordinate_deque(build_coordinate_deque(global_minima), "Global Minimums");
     int left = global_minima.front(), right = global_minima.back();
-    global_minima.push_back(0);
+    if (find(global_minima.begin(), global_minima.end(), 0) == global_minima.end()) {
+        global_minima.push_back(0);
+    }
     int previous_height = polynomial_coordinates[0];
     for (int i = 1; i < left; ++i) {
         if (polynomial_coordinates[i] < previous_height) {
@@ -134,7 +136,9 @@ void convexHullDescent() //Perform double-sided descent across the list of point
             previous_height = polynomial_coordinates[i];
         }
     }
-    global_minima.push_back(n);
+    if (find(global_minima.begin(), global_minima.end(), n) == global_minima.end()) {
+        global_minima.push_back(n);
+    }
     previous_height = polynomial_coordinates[n];
     for (int i = n - 1; i > right; --i) {
         if (polynomial_coordinates[i] < previous_height) {
@@ -256,3 +260,4 @@ int main() {
     return 0;
 
 }
+
