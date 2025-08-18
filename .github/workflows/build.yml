@@ -1,9 +1,9 @@
-name: Build Linux/macOS Standalone
+name: Build and Release
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*.*.*'   # Only runs on version tags like v1.0.0
   workflow_dispatch:
 
 jobs:
@@ -28,7 +28,6 @@ jobs:
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release
           cmake --build . --config Release
-        shell: bash
 
       - name: Package executable
         run: |
@@ -38,28 +37,14 @@ jobs:
           else
             zip -r Newton-Polygonizer-macOS.zip NewtonPolygonizer
           fi
-        shell: bash
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          path: |
-            build/Newton-Polygonizer-Linux.tar.gz
-            build/Newton-Polygonizer-macOS.zip
-      - name: Upload to latest release
+      - name: Upload to GitHub Release
         run: |
-          gh release create latest \
-            build/Newton-Polygonizer-Linux.tar.gz \
-            build/Newton-Polygonizer-macOS.zip \
-            --title "Latest Build" \
-            --notes "Automated build from GitHub Actions"
+          cd build
+          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+            gh release upload latest Newton-Polygonizer-Linux.tar.gz --clobber
+          else
+            gh release upload latest Newton-Polygonizer-macOS.zip --clobber
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
