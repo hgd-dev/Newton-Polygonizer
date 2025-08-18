@@ -30,9 +30,12 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          cmake -DSFML_STATIC_LIBS=ON ..
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            cmake -DSFML_STATIC_LIBS=ON -DCMAKE_PREFIX_PATH=/opt/homebrew/Cellar/sfml/2.6.0 ..
+          else
+            cmake -DSFML_STATIC_LIBS=ON ..
+          fi
           cmake --build . --config Release
-
       - name: Package executable
         run: |
           cd build
