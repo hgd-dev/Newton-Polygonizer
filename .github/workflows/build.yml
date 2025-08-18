@@ -74,6 +74,27 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
+      - name: Upload Linux artifact
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Newton-Polygonizer-Linux
+          path: build/Newton-Polygonizer-Linux.tar.gz
+      
+      - name: Upload macOS artifact
+        if: matrix.os == 'macos-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Newton-Polygonizer-macOS
+          path: build/Newton-Polygonizer-macOS.zip
+      
+      - name: Upload Windows artifact
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Newton-Polygonizer-Windows
+          path: build/Newton-Polygonizer-Windows.zip
+
           
       - name: Upload to GitHub Release Linux
         if: runner.os == 'Linux'
