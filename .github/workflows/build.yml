@@ -36,19 +36,18 @@ jobs:
         run: |
           cd build
           tar -czf Newton-Polygonizer-Linux.tar.gz NewtonPolygonizer
-          fi
       - name: Package macOS
         if: runner.os == 'macOS'
         run: |
           cd build
           zip -r Newton-Polygonizer-macOS.zip NewtonPolygonizer
-          fi
+          
       - name: Package Windows
         if: runner.os == 'Windows'
         run: |
           cd build
           Compress-Archive -Path NewtonPolygonizer.exe -DestinationPath Newton-Polygonizer-Windows.zip
-          fi
+          
       - name: Upload to GitHub Release
         run: |
           cd build
