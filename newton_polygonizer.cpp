@@ -3,6 +3,7 @@
 #include <iostream>
 #include <numeric>
 #include <algorithm>
+#include <climits>
 #include <thread>
 #include <SFML/Graphics.hpp>
 using namespace std;
@@ -324,9 +325,10 @@ int main() {
 
     //Output polygon results:
     cout << "\nNewton Polygon result numbers:\n";
-    for (int i = 0; i < latticed_hull.size() - 1; ++i) {
+    for (int i = 0; i < latticed_hull.size() - 1; i++) {
         cout << latticed_hull[i + 1].first - latticed_hull[i].first << ' ';
     }
+    cout << "\n\n";
 
     //Create graphs and detach for window persistency
     thread t1(create_SFML_plots, all_points, "All Points", sf::Color::Red);
