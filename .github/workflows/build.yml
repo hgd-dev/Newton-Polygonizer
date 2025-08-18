@@ -19,8 +19,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup CMake
-        uses: jwlawson/actions-setup-cmake@v2
+#      - name: Setup CMake
+#        uses: jwlawson/actions-setup-cmake@v2
 
       - name: Create build directory
         run: mkdir -p build
@@ -48,7 +48,7 @@ jobs:
           Compress-Archive -Path Release/NewtonPolygonizer.exe -DestinationPath Newton-Polygonizer-Windows.zip          
       - name: Create release
         run: |
-          gh release create latest --title "Final OS Build" --notes "Automated build"
+          gh release view latest || gh release create latest --title "Final OS Build" --notes "Automated build"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload to GitHub Release Linux
