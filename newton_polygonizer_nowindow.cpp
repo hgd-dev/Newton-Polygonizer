@@ -6,9 +6,11 @@
 #include <climits>
 #include <thread>
 #include <string>
+#include <sstream>
 using namespace std;
-int n = 0, p = 0;
+int n = 0;
 deque <int> polynomial_coefficients, polygon_lower;
+deque <int> p;
 map <int, int> polynomial_coordinates;
 
 //Large Object Manipulation Functions
@@ -186,15 +188,27 @@ void fillLattice() //Add all lattice points between list of coordinates in the g
 void take_inputs() //Take user inputs, with failsafes against invalid inputes
 {
     string temp;
-    while (true) {
-        cout << "Enter polygon target prime:\n";
+    bool inputPass = false;
+        cout << "Enter polygon target primes:\n";
         getline(cin, temp);
-        if (is_integer(temp) && is_prime(stoi(temp))) {
-            p = stoi(temp);
-            break;
+        temp = temp + ' ';
+        std::istringstream iss(temp);
+        string token;
+        while (std::getline(iss, token, ' ')) {
+            if (!token.empty()) {
+                if (is_integer(token) && is_prime(stoi(token))) {
+                    p.push_back(stoi(token));
+                }
+                else {
+                    cout << "Invalid input! Attempt aborted.\n\n";
+                    break;
+                }
+            }
+            else {
+                inputPass = true;
+                break;
+            }
         }
-        else { cout << "Invalid input! Attempt aborted.\n\n"; }
-    }
 
     while (true) {
         cout << "Enter polynomial degree:\n";
@@ -224,19 +238,11 @@ void take_inputs() //Take user inputs, with failsafes against invalid inputes
 //     p = , n = ;
 //     polynomial_coefficients = {}; //Caveat: coefficient list is reversed, starting with constant term and ending with the highest power
 // }
-
-int main() {
-    //Input:
-    take_inputs();
-    //quick_test_preinputs();
-
-    //Construct polynomial:
-    cout << "Complete Polynomial Expression Given:\n";
-    output_given_polynomial();
-
+void performAll(int prime) {
+    polynomial_coordinates.clear();
     //Build polygon by coordinates:
     for (int i = n; i >= 0; --i) {
-        polynomial_coordinates[n - i] = nu_function(p, polynomial_coefficients[i]);
+        polynomial_coordinates[n - i] = nu_function(prime, polynomial_coefficients[i]);
     }
     deque <pair <int, int>> all_points = build_deque_from_map(polynomial_coordinates);
     output_coordinate_deque(all_points, "All Points");
@@ -252,14 +258,24 @@ int main() {
     output_coordinate_deque(latticed_hull, "Latticed Hull");
 
     //Output polygon results:
-    cout << "\nNewton Polygon result numbers:\n";
+    cout << "\nNewton Polygon result numbers for prime " << prime << ":\n";
     for (int i = 0; i < latticed_hull.size() - 1; i++) {
         cout << latticed_hull[i + 1].first - latticed_hull[i].first << ' ';
     }
     cout << "\n\n";
+}
+int main() {
+    //Input:
+    take_inputs();
+    //quick_test_preinputs();
+
+    //Construct polynomial:
+    cout << "Complete Polynomial Expression Given:\n";
+    output_given_polynomial();
+
+    for (int x : p) {
+        performAll(x);
+    }
     while (true) {}
     return 0;
-
 }
-
-
