@@ -22,7 +22,7 @@ For casual users, this only downloads an executable app for easy access, suited 
 
 SFML for this project currently only has Windows support. It generates graph plots in new windows to visualize the Newton Polygon.
 
-[![Windows](https://img.shields.io/badge/Download-Windows-blue?style=for-the-badge&logo=windows)](https://github.com/hgd-dev/Newton-Polygonizer/releases/lastest/download/Newton-Polygonizer-Windows-SFML.zip)
+[![Windows](https://img.shields.io/badge/Download-Windows-blue?style=for-the-badge&logo=windows)](https://github.com/hgd-dev/Newton-Polygonizer/releases/lastest/download/Newton-Polygonizer-Windows.zip)
 
 ***Caveat for SFML runs:*** To ensure lifespan of graph plot windows, the source code always ends in an empty indefinite loop. To terminate the process, use `Ctrl + C` or `Cmd + C` to trigger a keyboard interrupt. Only then does the program end (also automatically closes plot windows).
 
@@ -177,6 +177,7 @@ Newton Polygon result numbers:
 
 
 - Result Numbers: Differences in x-coordinates between consecutive points in the latticed hull.
+
 
 
 
