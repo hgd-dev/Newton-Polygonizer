@@ -47,16 +47,21 @@ jobs:
         run: |
           cd build
           Compress-Archive -Path Release/NewtonPolygonizer.exe -DestinationPath Newton-Polygonizer-Windows.zip          
-      - name: Upload to GitHub Release
+      - name: Upload to GitHub Release Linux
+        if: runner.os == 'Linux'
         run: |
           cd build
-          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            gh release upload latest Newton-Polygonizer-Linux.tar.gz --clobber || echo "Release not found"
-          elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-            gh release upload latest Newton-Polygonizer-macOS.zip --clobber || echo "Release not found"
-          else
-            gh release upload latest Newton-Polygonizer-Windows.zip --clobber || echo "Release not found"
-          fi
+          gh release upload latest Newton-Polygonizer-Linux.tar.gz --clobber || echo "Release not found"
+      - name: Upload to GitHub Release macOS
+        if: runner.os == 'macOS'
+        run: |
+          cd build
+          gh release upload latest Newton-Polygonizer-macOS.zip --clobber || echo "Release not found"
+      - name: Upload to GitHub Release Windows
+        if: runner.os == 'Windows'
+        run: |
+          cd build
+          gh release upload latest Newton-Polygonizer-Windows.zip --clobber || echo "Release not found"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
