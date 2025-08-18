@@ -2,6 +2,8 @@ name: Build and Release
 
 on:
   push:
+    branches:
+      - main  # Trigger on every push to main
     tags:
       - 'v*.*.*'   # Only runs on version tags like v1.0.0
   workflow_dispatch:
@@ -11,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       - name: Checkout repository
@@ -34,17 +36,20 @@ jobs:
           cd build
           if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
             tar -czf Newton-Polygonizer-Linux.tar.gz NewtonPolygonizer
-          else
+          elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
             zip -r Newton-Polygonizer-macOS.zip NewtonPolygonizer
-          fi
+          else
+            powershell -Command "Compress-Archive -Path NewtonPolygonizer.exe -DestinationPath Newton-Polygonizer-Windows.zip"
 
       - name: Upload to GitHub Release
         run: |
           cd build
           if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            gh release upload latest Newton-Polygonizer-Linux.tar.gz --clobber
+            gh release upload latest Newton-Polygonizer-Linux.tar.gz --clobber || echo "Release not found"
+          elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+            gh release upload latest Newton-Polygonizer-macOS.zip --clobber || echo "Release not found"
           else
-            gh release upload latest Newton-Polygonizer-macOS.zip --clobber
-          fi
+            gh release upload latest Newton-Polygonizer-Windows.zip --clobber || echo "Release not found"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
