@@ -46,7 +46,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           cd build
-          Compress-Archive -Path build/Release/NewtonPolygonizer.exe -DestinationPath build/Newton-Polygonizer-Windows.zip          
+          Compress-Archive -Path Release/NewtonPolygonizer.exe -DestinationPath Newton-Polygonizer-Windows.zip          
       - name: Upload to GitHub Release
         run: |
           cd build
