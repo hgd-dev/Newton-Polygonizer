@@ -51,17 +51,17 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           cd build
-          gh release upload latestv1 Newton-Polygonizer-Linux.tar.gz --clobber || echo "Release not found"
+          gh release upload latest Newton-Polygonizer-Linux.tar.gz --clobber || echo "Release not found"
       - name: Upload to GitHub Release macOS
         if: runner.os == 'macOS'
         run: |
           cd build
-          gh release upload latestv1 Newton-Polygonizer-macOS.zip --clobber || echo "Release not found"
+          gh release upload latest Newton-Polygonizer-macOS.zip --clobber || echo "Release not found"
       - name: Upload to GitHub Release Windows
         if: runner.os == 'Windows'
         run: |
           cd build
-          gh release upload latestv1 Newton-Polygonizer-Windows.zip --clobber || echo "Release not found"
+          gh release upload latest Newton-Polygonizer-Windows.zip --clobber || echo "Release not found"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
