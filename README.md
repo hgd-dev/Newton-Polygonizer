@@ -4,20 +4,17 @@ The **Newton Polygonizer** is an automation tool that constructs and calculates 
 
 ---
 
-## Quick Download (From as an executable app)
+## Quick Download (Recommended)
 
-*Caveat for all users:* To ensure lifespan of graph plot windows, the source code always ends in an empty indefinite loop. To terminate the process, use `Ctrl + C` or `Cmd + C` to trigger a keyboard interrupt. Only then does the program end (also automatically closes plot windows).
+For casual users, this only downloads an executable app for easy access, suited to your OS. This format removes the tedium of extra installations, configurations, or compilations.
 
-**Recommended:** Use the auto-detecter — it picks the right version for your OS automatically.  
-[![Auto Detect OS](https://img.shields.io/badge/Download-Auto_Detect-success?style=for-the-badge&logo=github)](https://hgd-dev.github.io/Newton-Polygonizer/download.html)
-
----
-
-**Or pick manually:**
+***Important Note:*** For some systems with auto-protection or malware scanners, the executable may be flagged as unknown. For users to continue, simply bypass (ex. clicking "Run Anyway"). The source code is all in this repository and I assure all that this project has no harmful intentions.
 
 [![Windows](https://img.shields.io/badge/Download-Windows-blue?style=for-the-badge&logo=windows)](https://github.com/hgd-dev/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-Windows.zip)
 [![macOS](https://img.shields.io/badge/Download-macOS-lightgrey?style=for-the-badge&logo=apple)](https://github.com/hgd-dev/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-macOS.zip)
 [![Linux](https://img.shields.io/badge/Download-Linux-yellow?style=for-the-badge&logo=linux)](https://github.com/hgd-dev/Newton-Polygonizer/releases/latest/download/Newton-Polygonizer-Linux.tar.gz)
+
+***Caveat for all runs:*** To ensure lifespan of graph plot windows, the source code always ends in an empty indefinite loop. To terminate the process, use `Ctrl + C` or `Cmd + C` to trigger a keyboard interrupt. Only then does the program end (also automatically closes plot windows).
 
 ---
 
@@ -170,3 +167,4 @@ Newton Polygon result numbers:
 
 
 - Result Numbers: Differences in x-coordinates between consecutive points in the latticed hull.
+
