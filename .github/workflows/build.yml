@@ -1,58 +1,54 @@
-name: Build and Release
+name: Build Newton Polygonizer for other OS
 
 on:
   push:
-    tags:
-      - 'v*.*.*'  # Trigger on version tags like v1.0.0
+    branches: [main]
+  pull_request:
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Install Homebrew
-        if: runner.os == 'macOS'
-        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      - name: Install dependencies
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt update
-          sudo apt install -y build-essential cmake libsfml-dev zip tar
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Install dependencies
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew update
-          brew install cmake sfml zip
+    - name: Set up CMake
+      uses: jwlawson/actions-setup-cmake@v2
 
-      - name: Create build directory
-        run: mkdir -p build
+    - name: Configure and Build
+      run: |
+        mkdir -p build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+        cmake --build . --config Release
 
-      - name: Configure CMake
-        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DSFML_STATIC_LIBRARIES=ON
+    - name: Package Executable
+      run: |
+        cd build
+        if [[ "$RUNNER_OS" == "Linux" ]]; then
+          tar -czvf Newton-Polygonizer-Linux.tar.gz NewtonPolygonizer
+        elif [[ "$RUNNER_OS" == "macOS" ]]; then
+          zip -r Newton-Polygonizer-macOS.zip NewtonPolygonizer
+        fi
 
-      - name: Build
-        run: cmake --build build --config Release
+    - name: Upload to GitHub Releases
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Package executable
-        run: |
-          if [[ "$RUNNER_OS" == "Linux" ]]; then
-            tar -czvf build/Newton-Polygonizer-Linux.tar.gz -C build NewtonPolygonizer
-          else
-            zip -j build/Newton-Polygonizer-macOS.zip build/NewtonPolygonizer
-          fi
-
-      - name: Create GitHub release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            build/Newton-Polygonizer-Linux.tar.gz
-            build/Newton-Polygonizer-macOS.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload packaged artifacts
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          build/Newton-Polygonizer-Linux.tar.gz
+          build/Newton-Polygonizer-macOS.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
