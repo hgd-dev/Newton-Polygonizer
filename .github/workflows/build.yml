@@ -1,0 +1,54 @@
+name: Build Newton-Polygonizer
+
+on:
+  push:
+    tags:
+      - 'v*'   # triggers only on version tags like v1.0.0
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            sudo apt update
+            sudo apt install -y cmake g++ libsfml-dev zip tar
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            brew update
+            brew install cmake sfml
+          fi
+
+      - name: Build static executable
+        run: |
+          mkdir -p build
+          cd build
+          cmake -DSFML_STATIC_LIBS=ON ..
+          cmake --build . --config Release
+
+      - name: Package executable
+        run: |
+          cd build
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            tar czf Newton-Polygonizer-Linux.tar.gz Newton-Polygonizer
+            mv Newton-Polygonizer-Linux.tar.gz ../
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            zip -r Newton-Polygonizer-macOS.zip Newton-Polygonizer
+            mv Newton-Polygonizer-macOS.zip ../
+          fi
+
+      - name: Create GitHub Release and upload
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ${{ matrix.os == 'Linux' && 'build/../Newton-Polygonizer-Linux.tar.gz' || '' }}
+            ${{ matrix.os == 'macOS' && 'build/../Newton-Polygonizer-macOS.zip' || '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
