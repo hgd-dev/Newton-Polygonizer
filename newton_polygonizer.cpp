@@ -1,7 +1,11 @@
-#include <bits/stdc++.h>
+#include <deque>
+#include <map>
+#include <iostream>
+#include <numeric>
+#include <algorithm>
+#include <thread>
 #include <SFML/Graphics.hpp>
 using namespace std;
-
 int n = 0, p = 0;
 deque <int> polynomial_coefficients, polygon_lower;
 map <int, int> polynomial_coordinates;
@@ -179,50 +183,58 @@ void create_SFML_plots(deque <pair <int, int>> points, string title, sf::Color p
     const int width = 600, height = 600;
     const int padding = 50;
     const int scale = 50;
-    sf::RenderWindow window(sf::VideoMode(width, height), title);
+    sf::RenderWindow window(sf::VideoMode({width, height}), title);
     int maxX = 0, maxY = 0;
     for (auto &pt : points) {
         maxX = max(maxX, pt.first);
         maxY = max(maxY, pt.second == INT_MAX ? 0 : pt.second);
     }
     while (window.isOpen()) {
+        // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
+        while (window.pollEvent(event))
+        {
+            // "close requested" event: we close the window
+            if (event.type == sf::Event::Closed)
                 window.close();
-            }
         }
         window.clear(sf::Color::White);
+
         for (int x = 0; x <= maxX + 2; ++x) {
-            sf::Vertex line[] = {
-                sf::Vertex(sf::Vector2f(padding + x * scale, height - padding), sf::Color(200,200,200)),
-                sf::Vertex(sf::Vector2f(padding + x * scale, padding), sf::Color(200,200,200))
-            };
-            window.draw(line, 2, sf::Lines);
+            sf::VertexArray line(sf::PrimitiveType::Lines, 2);
+            line[0].position = sf::Vector2f{static_cast<float>(padding + x * scale), static_cast<float>(height - padding)};
+            line[0].color = sf::Color(200,200,200);
+            line[1].position = sf::Vector2f{static_cast<float>(padding + x * scale), static_cast<float>(padding)};
+            line[1].color = sf::Color(200,200,200);
+            window.draw(line);
         }
         for (int y = 0; y <= maxY + 2; ++y) {
-            sf::Vertex line[] = {
-                sf::Vertex(sf::Vector2f(padding, height - padding - y * scale), sf::Color(200,200,200)),
-                sf::Vertex(sf::Vector2f(width - padding, height - padding - y * scale), sf::Color(200,200,200))
-            };
-            window.draw(line, 2, sf::Lines);
+            sf::VertexArray line(sf::PrimitiveType::Lines, 2);
+            line[0].position = sf::Vector2f{static_cast<float>(padding), static_cast<float>(height - padding - y * scale)};
+            line[0].color = sf::Color(200,200,200);
+            line[1].position = sf::Vector2f{static_cast<float>(width - padding), static_cast<float>(height - padding - y * scale)};
+            line[1].color = sf::Color(200,200,200);
+            window.draw(line);
         }
 
         // Draw axes
-        sf::Vertex xAxis[] = {
-            sf::Vertex(sf::Vector2f(padding, height - padding), sf::Color::Black),
-            sf::Vertex(sf::Vector2f(width - padding, height - padding), sf::Color::Black)
-        };
-        sf::Vertex yAxis[] = {
-            sf::Vertex(sf::Vector2f(padding, height - padding), sf::Color::Black),
-            sf::Vertex(sf::Vector2f(padding, padding), sf::Color::Black)
-        };
-        window.draw(xAxis, 2, sf::Lines);
-        window.draw(yAxis, 2, sf::Lines);
+        sf::VertexArray xAxis(sf::PrimitiveType::Lines, 2);
+        xAxis[0].position = sf::Vector2f{static_cast<float>(padding), static_cast<float>(height - padding)};
+        xAxis[0].color = sf::Color::Black;
+        xAxis[1].position = sf::Vector2f{static_cast<float>(width - padding), static_cast<float>(height - padding)};
+        xAxis[1].color = sf::Color::Black;
+        sf::VertexArray yAxis(sf::PrimitiveType::Lines, 2);
+        yAxis[0].position = sf::Vector2f{static_cast<float>(padding), static_cast<float>(height - padding)};
+        yAxis[0].color = sf::Color::Black;
+        yAxis[1].position = sf::Vector2f{static_cast<float>(padding), static_cast<float>(padding)};
+        yAxis[1].color = sf::Color::Black;
+
+        window.draw(xAxis);
+        window.draw(yAxis);
 
         // Draw points and connect them
         if (!points.empty()) {
-            sf::VertexArray lines(sf::LineStrip, points.size());
+            sf::VertexArray lines(sf::PrimitiveType::LineStrip, points.size());
             int idx = 0;
             for (auto &pt : points) {
                 float px = padding + pt.first * scale;
@@ -232,14 +244,13 @@ void create_SFML_plots(deque <pair <int, int>> points, string title, sf::Color p
 
                 sf::CircleShape circle(5);
                 circle.setFillColor(pointColor);
-                circle.setOrigin(5, 5);
-                circle.setPosition(px, py);
+                circle.setOrigin(sf::Vector2f(5, 5));
+                circle.setPosition(sf::Vector2(px, py));
                 window.draw(circle);
                 idx++;
             }
             window.draw(lines);
         }
-
         window.display();
     }
 }
