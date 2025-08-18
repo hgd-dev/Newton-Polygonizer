@@ -20,7 +20,7 @@ For casual users, this only downloads an executable app for easy access, suited 
 
 ### SFML Version (supported for Windows)
 
-SFML for this project currently only has Windows support. It generates graph plots in new windows to visualize the Newton Polygon.
+SFML for this project currently only has Windows support. It generates graph plots in new windows to visualize the Newton Polygon. Unfortunately this only supports 1 prime at a time for the plot display.
 
 [![Windows](https://img.shields.io/badge/Download-Windows-blue?style=for-the-badge&logo=windows)](https://github.com/hgd-dev/Newton-Polygonizer/releases/download/latest/Newton-Polygonizer-Windows-SFML.zip)
 
@@ -177,6 +177,7 @@ Newton Polygon result numbers:
 
 
 - Result Numbers: Differences in x-coordinates between consecutive points in the latticed hull.
+
 
 
 
