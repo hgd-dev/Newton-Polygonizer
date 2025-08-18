@@ -1,6 +1,8 @@
 # Newton Polygonizer
 
-The **Newton Polygonizer** is an automation tool that constructs and calculates Newton Polygons from a user-inputted single-variable polynomial of any degree and a target prime. It outputs the results of the calculated Newton Polygon in the terminal and generates graphs of the corresponding plots in new windows using SFML.
+The **Newton Polygonizer** is an automation tool that constructs and calculates Newton Polygons from a user-inputted single-variable polynomial of any degree and a target prime. It outputs the results of the calculated Newton Polygon in the terminal and generates points of the corresponding plots.
+
+*Windows special: * With SFML support, graphs can be created and drawn in new windows.
 
 ---
 
@@ -167,4 +169,5 @@ Newton Polygon result numbers:
 
 
 - Result Numbers: Differences in x-coordinates between consecutive points in the latticed hull.
+
 
