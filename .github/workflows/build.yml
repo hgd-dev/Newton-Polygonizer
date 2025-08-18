@@ -40,7 +40,7 @@ jobs:
             zip -r Newton-Polygonizer-macOS.zip NewtonPolygonizer
           else
             powershell -Command "Compress-Archive -Path NewtonPolygonizer.exe -DestinationPath Newton-Polygonizer-Windows.zip"
-
+          fi
       - name: Upload to GitHub Release
         run: |
           cd build
@@ -50,6 +50,7 @@ jobs:
             gh release upload latest Newton-Polygonizer-macOS.zip --clobber || echo "Release not found"
           else
             gh release upload latest Newton-Polygonizer-Windows.zip --clobber || echo "Release not found"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
