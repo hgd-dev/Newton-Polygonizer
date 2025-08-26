@@ -7,7 +7,6 @@
 #include <thread>
 #include <string>
 #include <sstream>
-#include <unordered_map>
 using namespace std;
 bool is_integer(string str) {
     unordered_map <string, string> a;
@@ -114,5 +113,8 @@ int main() {
     output_given_polynomial(quotient);
     cout << "\nRemainder:\n";
     output_given_polynomial(dividend);
+    cout << '\n';
+    while (true) {}
     return 0;
+
 }
