@@ -9,7 +9,6 @@
 #include <sstream>
 using namespace std;
 bool is_integer(string str) {
-    unordered_map <string, string> a;
     if (str.empty()) return false;
     while (str.front() == ' ') {
         str = str.substr(1);
@@ -118,3 +117,4 @@ int main() {
     return 0;
 
 }
+
