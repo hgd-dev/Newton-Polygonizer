@@ -2,8 +2,6 @@ name: Build and Release
 
 on:
   push:
-    branches:
-      - main  # Trigger on every push to main
     tags:
       - 'v*.*.*'   # Only runs on version tags like v1.0.0
   workflow_dispatch:
