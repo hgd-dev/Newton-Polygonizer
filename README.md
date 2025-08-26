@@ -1,12 +1,12 @@
 # Newton Polygonizer
 
-The **Newton Polygonizer** is an automation tool that constructs and calculates Newton Polygons from a user-inputted single-variable polynomial of any degree and a target prime. It outputs the results of the calculated Newton Polygon in the terminal and generates points of the corresponding plots.
+The **Newton Polygonizer** is an automation tool that constructs and calculates Newton Polygons from a user-inputted single-variable polynomial of any degree and a target prime. It outputs the results of the calculated Newton Polygon in the terminal and generates points of the corresponding plots. Accompanying this subject is a short app program for polynomial long division, usually used in conjunction.
 
 *Windows special: * With SFML support, graphs can be created and drawn in new windows.
 
 ---
 
-## Quick Download (Recommended)
+## Quick Download of Newton Polygonizer (Recommended)
 
 For casual users, this only downloads an executable app for easy access, suited to your OS. This format removes the tedium of extra installations, configurations, or compilations.
 
@@ -25,6 +25,20 @@ SFML for this project currently only has Windows support. It generates graph plo
 [![Windows](https://img.shields.io/badge/Download-Windows-blue?style=for-the-badge&logo=windows)](https://github.com/hgd-dev/Newton-Polygonizer/releases/download/latest/Newton-Polygonizer-Windows-SFML.zip)
 
 ***Caveat for SFML runs:*** To ensure lifespan of graph plot windows, the source code always ends in an empty indefinite loop. To terminate the process, use `Ctrl + C` or `Cmd + C` to trigger a keyboard interrupt. Only then does the program end (also automatically closes plot windows).
+
+---
+
+## Side Project (Recommended)
+
+For casual users, this only downloads an executable app for easy access, suited to your OS. This format removes the tedium of extra installations, configurations, or compilations.
+
+***Important Note:*** For some systems with auto-protection or malware scanners, the executable may be flagged as unknown. For users to continue, simply bypass (ex. clicking "Run Anyway"). The source code is all in this repository and I assure all that this project has no harmful intentions.
+
+[![Windows](https://img.shields.io/badge/Download-Windows-blue?style=for-the-badge&logo=windows)](https://github.com/hgd-dev/Newton-Polygonizer/actions/runs/17226473423/artifacts/3849459884)
+[![macOS](https://img.shields.io/badge/Download-macOS-lightgrey?style=for-the-badge&logo=apple)](https://github.com/hgd-dev/Newton-Polygonizer/actions/runs/17226473423/artifacts/3849457963)
+[![Linux](https://img.shields.io/badge/Download-Linux-yellow?style=for-the-badge&logo=linux)](https://github.com/hgd-dev/Newton-Polygonizer/actions/runs/17226473423/artifacts/3849457968)
+
+***Caveat for division runs:*** To ensure lifespan of the terminal output, the source code always ends in an empty indefinite loop. To terminate the process, use `Ctrl + C` or `Cmd + C` to trigger a keyboard interrupt. Only then does the program end.
 
 ---
 
@@ -177,6 +191,7 @@ Newton Polygon result numbers:
 
 
 - Result Numbers: Differences in x-coordinates between consecutive points in the latticed hull.
+
 
 
 
